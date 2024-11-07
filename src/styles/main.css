@@ -1,0 +1,246 @@
+.App {
+    font-family: "IBM PLex Sans", sans-serif;
+    font-size: 18px;
+    padding: 20px;
+    background-color: "#fafafa";
+}
+
+.Titlebar {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.Home {
+    display: flex;
+}
+
+.CapturePreview {
+    flex: 2;
+    width: 1080px;
+    height: 640px;
+    aspect-ratio: 16 / 9;
+    background-color: lightgray;
+    align-content: center;
+    border-radius: 10px;
+    position: relative;
+}
+
+.SimInfo {
+    flex: 1;
+    padding-left: 40px;
+}
+
+.CapturePreview p {
+    color: grey;
+    padding: 40px;
+}
+
+.CaptureImg {
+    border-radius: 10px;
+}
+
+.CameraBtn {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+}
+
+.SimInfo h1 {
+    font-family: "IBM Plex Sans Condensed", sans-serif;
+    font-size: 28px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.ObjectInfo {
+    text-align: center;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.ObjectImage {
+    flex: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.ObjectImage p {
+    margin: 6px;
+    font-weight: 500;
+}
+
+.ObjectImage img {
+    width: 100px;
+    height: 100px;
+}
+
+.ObjectImage hr {
+    width: 20px;
+    height: 2px;
+    border: none;
+    background-color: lightgray;
+}
+
+.ImageDesc {
+    width: 100%;
+    border: 2px solid lightgray;
+    align-content: center;
+    border-radius: 10px;
+    position: relative;
+}
+
+.ImageDesc p {
+    padding: 12px;
+    margin: 0px;
+}
+
+.Bottombar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    text-align: right;
+    align-content: center;
+    z-index: 10;
+    box-shadow: 0px -1px 20px rgba(10, 10, 10, 0.2);
+    background-color: #fafafa;
+}
+
+.PlayBtn {
+    padding: 20px;
+    height: 40px;
+}
+
+.CaptureBtn {
+    padding: 20px;
+    height: 40px;
+}
+
+/* Camera Page Components */
+
+.Camera {
+    justify-content: center;
+    display: flex;
+}
+
+.CameraPreview {
+    aspect-ratio: 16 / 9;
+    /* background-color: lightgray; */
+    align-content: center;
+    border-radius: 10px;
+    position: relative;
+}
+
+#ImageCapture {
+    display: block;
+}
+
+.Webcam {
+    border-radius: 10px;
+}
+
+   
+/* Specific style for mobile view */
+@media (max-width: 480px) {
+    .App {
+        width: 100vw;
+        height: 100vh;
+        padding: 20px;
+    }
+
+    /* HomePage components */
+
+    .SimInfo {
+        margin-bottom: 20px;
+    }
+
+    .CapturePreview {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background-color: lightgray;
+        align-content: center;
+        border-radius: 10px;
+        position: relative;
+    }
+
+    .CapturePreview p {
+        color: grey;
+        padding: 12px;
+    }
+
+    .CameraBtn {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        width: 40px;
+    }
+
+    .ObjectInfo {
+        text-align: center;
+        padding: 10px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .ObjectImage {
+        flex: 1;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .ObjectImage p {
+        margin: 6px;
+        font-weight: 500;
+    }
+
+    .ObjectImage hr {
+        width: 20px;
+        height: 2px;
+        border: none;
+        background-color: lightgray;
+    }
+
+    .ImageDesc {
+        width: 100%;
+        border: 2px solid lightgray;
+        align-content: center;
+        border-radius: 10px;
+        position: relative;
+    }
+
+    .ImageDesc p {
+        padding: 12px;
+        margin: 0px;
+    }
+
+    .BottomBar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        text-align: right;
+        align-content: center;
+        z-index: 10;
+        box-shadow: 0px -1px 20px rgba(10, 10, 10, 0.2);
+    }
+
+    .PlayBtn {
+        padding: 20px;
+        height: 40px;
+    }
+
+    /* Camera Page Components */
+
+    .CameraPreview {
+        width: 100%;
+        aspect-ratio: 9 / 16;
+        background-color: lightgray;
+        align-content: center;
+        border-radius: 10px;
+        position: relative;
+    }
+}
