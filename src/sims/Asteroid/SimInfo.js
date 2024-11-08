@@ -15,6 +15,7 @@ export function AsteroidSimInfo() {
           <p>Draw your sun and asteroid and simulate the asteroid's path around the sun by placing the cards on the background and capturing with the app.</p>
           <ObjectInfo selectedImg={selectedImg} setSelectedImage={setSelectedImage} />
           <ImageDesc selectedImg={selectedImg} />
+          <p>First, capture your space background by clicking the camera button. Then, place your objects on the background and capture again.</p>
       </div>
     );
 }

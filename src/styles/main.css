@@ -12,22 +12,30 @@
 
 .Home {
     display: flex;
+    justify-content: center;
 }
 
 .CapturePreview {
-    flex: 2;
-    width: 1080px;
-    height: 640px;
-    aspect-ratio: 16 / 9;
+    /* flex: 1; */
+    width: 480px;
+    height: 320px;
+    /* aspect-ratio: 16 / 9; */
     background-color: lightgray;
     align-content: center;
     border-radius: 10px;
     position: relative;
+    margin-bottom: 20px;
+}
+
+.CapturePreview canvas {
+    border-radius: 10px;
 }
 
 .SimInfo {
-    flex: 1;
-    padding-left: 40px;
+    /* flex: 1; */
+    padding-left: 80px;
+    padding-right: 80px;
+    width: 480px;
 }
 
 .CapturePreview p {
@@ -41,14 +49,21 @@
 
 .CameraBtn {
     position: absolute;
-    bottom: 30px;
-    right: 30px;
+    bottom: 15px;
+    right: 15px;
+    width: 60px;
+}
+
+.CheckImg {
+    position: absolute;
+    top: 30px;
+    left: 30px;
     width: 60px;
 }
 
 .SimInfo h1 {
     font-family: "IBM Plex Sans Condensed", sans-serif;
-    font-size: 28px;
+    font-size: 32px;
     margin-bottom: 12px;
     font-weight: 600;
 }
@@ -121,17 +136,18 @@
 
 /* Camera Page Components */
 
-.Camera {
+/* .Camera {
     justify-content: center;
     display: flex;
-}
+} */
 
 .CameraPreview {
-    aspect-ratio: 16 / 9;
+    /* aspect-ratio: 16 / 9; */
     /* background-color: lightgray; */
     align-content: center;
     border-radius: 10px;
     position: relative;
+    justify-self: center;
 }
 
 #ImageCapture {

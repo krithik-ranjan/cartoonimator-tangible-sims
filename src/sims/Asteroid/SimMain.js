@@ -4,14 +4,18 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { Titlebar } from '../../ui/Titlebar';
 import { AsteroidSimInfo } from './SimInfo';
 import { BottombarHome, BottombarCapture } from '../../ui/Bottombar';
-import { CameraPreview } from '../../ui/CameraPreview';
+// import { CameraPreview } from '../../ui/CameraPreview';
+import { CameraPage } from './Camera';
 
-import processCapture from '../../utils/ProcessCapture';
+// import processCapture from '../../utils/CVUtils';
 
 import CameraBtn from '../../images/camera-btn.svg';
 
 export default function AsteroidSim() {
     const [pageState, setPageState] = useState("home");
+
+    // const backgroundRef = useRef(null);
+    const [bgCapture, setBgCapture] = useState(null);
 
     // const webcamRef = useRef(null);
     // const captureCanvasRef = useRef(null);
@@ -31,8 +35,8 @@ export default function AsteroidSim() {
             <div className="App">
                 <Titlebar />
                 <div className="Home">
-                    <CapturePreview setState={setPageState} />
                     <AsteroidSimInfo />
+                    <CapturePreview setState={setPageState} bgCapture={bgCapture} />
                 </div>
                 <BottombarHome />
             </div>
@@ -41,35 +45,69 @@ export default function AsteroidSim() {
     else if (pageState === "camera") {
         return (
             <div className="App">
-                <Titlebar />
-                <div className="Camera">
+                <Titlebar /> 
+                <CameraPage setState={setPageState} capture={bgCapture} setCapture={setBgCapture}/>
+
+                {/* <div className="Camera">
                     <CameraPreview />
-                    {/* <img id="ImageCapture" src={capture} width={1080} height={640}/>
-                    <canvas id="TestCapture" width={1080} height={640} /> */}
-                </div>
-                <BottombarCapture onClick={() => {}}/>
+                    <img id="ImageCapture" src={capture} width={1080} height={640}/>
+                    <canvas id="TestCapture" width={1080} height={640} />
+                </div> */}
+                {/* <BottombarCapture onClick={() => {}}/> */}
             </div>
         )
     } 
 }
 
-function CapturePreview({setState}) {
+function CapturePreview({setState, bgCapture}) {
+    const canvasRef = useRef(null);
+
+    useEffect(() => {
+        if (bgCapture == null) 
+            return;
+
+        console.log("Showing capture on canvas, size: ");
+        console.log(bgCapture.size());
+
+        // Resize before showing on canvas
+        let temp = new cv.Mat();
+        let dsize = new cv.Size(480, 320);
+        cv.resize(bgCapture, temp, dsize, 0, 0, cv.INTER_AREA);
+
+        const canvas = canvasRef.current;
+        cv.imshow(canvas, temp);
+
+        temp.delete();
+    }, []);
+
     return (
-        <div className="CapturePreview">
-            {/* {image ? (
+        <div className="PreviewPane">
+            <h3>Background</h3>
+            <div className="CapturePreview">
                 <canvas 
-                    className="CaptureImg" 
-                    id="TestImage"></canvas>
-            ) : (
-                <p>Place the object cards on the paper template and take a picture to see it here.</p>
-            )} */}
-            <canvas id="TestCapture"></canvas>
-            <img 
-                className="CameraBtn"
-                src={CameraBtn}
-                alt="Camera Button"
-                onClick={() => setState("camera") }
-            />
+                    ref={canvasRef}
+                    width={480}
+                    height={320} />
+                <img 
+                    className="CameraBtn"
+                    src={CameraBtn}
+                    alt="Camera Button"
+                    onClick={() => setState("camera") }
+                />
+            </div>
+            <h3>Objects</h3>
+            <div className="CapturePreview">
+                <canvas 
+                    width={480}
+                    height={320} />
+                <img 
+                    className="CameraBtn"
+                    src={CameraBtn}
+                    alt="Camera Button"
+                    onClick={() => setState("camera") }
+                />
+            </div>
+            
         </div>
     )
 }
