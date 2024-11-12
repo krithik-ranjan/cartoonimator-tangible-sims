@@ -3,108 +3,114 @@ import { useState, useRef, useCallback, useEffect } from "react";
 
 import { Titlebar } from '../../ui/Titlebar';
 import { AsteroidSimInfo } from './SimInfo';
+import { AsteroidSimulation } from './SimUtils';
 import { BottombarHome, BottombarCapture } from '../../ui/Bottombar';
-// import { CameraPreview } from '../../ui/CameraPreview';
 import { CameraPage } from './Camera';
-
-// import processCapture from '../../utils/CVUtils';
 
 import CameraBtn from '../../images/camera-btn.svg';
 
+let simData = new AsteroidSimulation();
+
 export default function AsteroidSim() {
     const [pageState, setPageState] = useState("home");
-
-    // const backgroundRef = useRef(null);
-    const [bgCapture, setBgCapture] = useState(null);
-
-    // const webcamRef = useRef(null);
-    // const captureCanvasRef = useRef(null);
-    // const [capture, setCapture] = useState(null);
-
-    // const captureFrame = useCallback(() => {
-    //     const image = webcamRef.current.getScreenshot();
-    //     console.log(`Capturing... ${image}`);
-
-    //     setCapture(image);
-    // }, [webcamRef]);
-
-    // If capture not null
+    simData.updateState("home");
 
     if (pageState === "home") {
+        console.log("[pageState] home");
+        simData.updateState("home");
         return (
             <div className="App">
                 <Titlebar />
                 <div className="Home">
                     <AsteroidSimInfo />
-                    <CapturePreview setState={setPageState} bgCapture={bgCapture} />
+                    <CapturePreview setState={setPageState} simData={simData}/>
                 </div>
                 <BottombarHome />
             </div>
         )
     } 
-    else if (pageState === "camera") {
+    else if (pageState === "bg-camera") {
+        console.log("[pageState] bg-camera");
+        simData.updateState("bg-camera");
         return (
             <div className="App">
                 <Titlebar /> 
-                <CameraPage setState={setPageState} capture={bgCapture} setCapture={setBgCapture}/>
-
-                {/* <div className="Camera">
-                    <CameraPreview />
-                    <img id="ImageCapture" src={capture} width={1080} height={640}/>
-                    <canvas id="TestCapture" width={1080} height={640} />
-                </div> */}
-                {/* <BottombarCapture onClick={() => {}}/> */}
+                <CameraPage setState={setPageState} simData={simData}/>
+            </div>
+        )
+    } 
+    else if (pageState === "obj-camera") {
+        console.log("[pageState] obj-camera");
+        simData.updateState("obj-camera");
+        return (
+            <div className="App">
+                <Titlebar /> 
+                <CameraPage setState={setPageState} simData={simData}/>
             </div>
         )
     } 
 }
 
-function CapturePreview({setState, bgCapture}) {
-    const canvasRef = useRef(null);
+function CapturePreview({setState, simData}) {
+    const bgCanvasRef = useRef(null);
+    const objCanvasRef = useRef(null);
+
+    // let bgCapture = simData.getBackgroundImg();
 
     useEffect(() => {
-        if (bgCapture == null) 
-            return;
+        const bgCanvas = bgCanvasRef.current;
+        simData.renderBackground(bgCanvas, 480, 320);
 
-        console.log("Showing capture on canvas, size: ");
-        console.log(bgCapture.size());
+        // if (bgCapture !== null) {
+        //     // Resize before showing on canvas
+        //     let temp = new cv.Mat();
+        //     let dsize = new cv.Size(480, 320);
+        //     cv.resize(bgCapture, temp, dsize, 0, 0, cv.INTER_AREA);
 
-        // Resize before showing on canvas
-        let temp = new cv.Mat();
-        let dsize = new cv.Size(480, 320);
-        cv.resize(bgCapture, temp, dsize, 0, 0, cv.INTER_AREA);
+        //     const canvas = bgCanvasRef.current;
+        //     cv.imshow(canvas, temp);
 
-        const canvas = canvasRef.current;
-        cv.imshow(canvas, temp);
+        //     temp.delete();
+        // }
 
-        temp.delete();
+        // if (objCapture !== null) {
+        //     let temp = new cv.Mat();
+        //     let dsize = new cv.Size(480, 320);
+        //     cv.resize(objCapture, temp, dsize, 0, 0, cv.INTER_AREA);
+
+        //     const canvas = objCanvasRef.current;
+        //     cv.imshow(canvas, temp);
+
+        //     temp.delete();
+        // }
     }, []);
 
     return (
         <div className="PreviewPane">
-            <h3>Background</h3>
+            <h4>Background</h4>
             <div className="CapturePreview">
                 <canvas 
-                    ref={canvasRef}
+                    ref={bgCanvasRef}
                     width={480}
                     height={320} />
                 <img 
                     className="CameraBtn"
                     src={CameraBtn}
                     alt="Camera Button"
-                    onClick={() => setState("camera") }
+                    onClick={() => setState("bg-camera") }
                 />
             </div>
-            <h3>Objects</h3>
+            <h4>Objects</h4>
             <div className="CapturePreview">
                 <canvas 
+                    ref={objCanvasRef}
                     width={480}
                     height={320} />
                 <img 
                     className="CameraBtn"
                     src={CameraBtn}
                     alt="Camera Button"
-                    onClick={() => setState("camera") }
+                    onClick={() => setState("obj-camera") }
                 />
             </div>
             
