@@ -4,10 +4,11 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { Titlebar } from '../../ui/Titlebar';
 import { AsteroidSimInfo } from './SimInfo';
 import { AsteroidSimulation } from './SimUtils';
-import { BottombarHome, BottombarCapture } from '../../ui/Bottombar';
 import { CameraPage } from './Camera';
+import { PlayPage } from './Play';
 
 import CameraBtn from '../../images/camera-btn.svg';
+import PlayBtn from '../../images/play-btn.svg';
 
 let simData = new AsteroidSimulation();
 
@@ -25,7 +26,7 @@ export default function AsteroidSim() {
                     <AsteroidSimInfo />
                     <CapturePreview setState={setPageState} simData={simData}/>
                 </div>
-                <BottombarHome />
+                <Bottombar onClick={() => setPageState("play")} />
             </div>
         )
     } 
@@ -49,6 +50,16 @@ export default function AsteroidSim() {
             </div>
         )
     } 
+    else if (pageState === "play") {
+        console.log("[pageState] play");
+        simData.updateState("play");
+        return (
+            <div className="App">
+                <Titlebar />
+                <PlayPage setState={setPageState} simData={simData}/>
+            </div>
+        )
+    }
 }
 
 function CapturePreview({setState, simData}) {
@@ -59,30 +70,10 @@ function CapturePreview({setState, simData}) {
 
     useEffect(() => {
         const bgCanvas = bgCanvasRef.current;
-        simData.renderBackground(bgCanvas, 480, 320);
+        simData.previewBackground(bgCanvas, 480, 320);
 
-        // if (bgCapture !== null) {
-        //     // Resize before showing on canvas
-        //     let temp = new cv.Mat();
-        //     let dsize = new cv.Size(480, 320);
-        //     cv.resize(bgCapture, temp, dsize, 0, 0, cv.INTER_AREA);
-
-        //     const canvas = bgCanvasRef.current;
-        //     cv.imshow(canvas, temp);
-
-        //     temp.delete();
-        // }
-
-        // if (objCapture !== null) {
-        //     let temp = new cv.Mat();
-        //     let dsize = new cv.Size(480, 320);
-        //     cv.resize(objCapture, temp, dsize, 0, 0, cv.INTER_AREA);
-
-        //     const canvas = objCanvasRef.current;
-        //     cv.imshow(canvas, temp);
-
-        //     temp.delete();
-        // }
+        const objCanvas = objCanvasRef.current;
+        simData.previewObjects(objCanvas, 480, 320);
     }, []);
 
     return (
@@ -110,7 +101,7 @@ function CapturePreview({setState, simData}) {
                     className="CameraBtn"
                     src={CameraBtn}
                     alt="Camera Button"
-                    onClick={() => setState("obj-camera") }
+                    onClick={() => setState("obj-camera")}
                 />
             </div>
             
@@ -118,3 +109,15 @@ function CapturePreview({setState, simData}) {
     )
 }
 
+function Bottombar({onClick}) {
+    return (
+        <div className="Bottombar">
+            <img 
+                className="PlayBtn"
+                src={PlayBtn}
+                alt="Play Button"
+                onClick={() => {onClick()}}
+            />
+        </div>
+    )
+}

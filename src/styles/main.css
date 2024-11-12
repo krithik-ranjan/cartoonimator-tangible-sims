@@ -86,8 +86,8 @@
 }
 
 .ObjectImage img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
 }
 
 .ObjectImage hr {
@@ -133,6 +133,18 @@
     height: 40px;
 }
 
+.BottomBtn {
+    padding: 20px;
+    height: 40px;
+}
+
+.BackBtn {
+    height: 40px;
+    position: absolute;
+    padding: 20px;
+    left: 0px;
+}
+
 /* Camera Page Components */
 
 /* .Camera {
@@ -140,7 +152,7 @@
     display: flex;
 } */
 
-.CameraPreview {
+.CameraPage {
     /* aspect-ratio: 16 / 9; */
     /* background-color: lightgray; */
     align-content: center;
@@ -154,6 +166,16 @@
 }
 
 .Webcam {
+    border-radius: 10px;
+}
+
+.PlayPage {
+    align-content: center;
+    justify-self: center;
+}
+
+.PlayCanvas {
+    border: 1px solid #1e1e1e;
     border-radius: 10px;
 }
 

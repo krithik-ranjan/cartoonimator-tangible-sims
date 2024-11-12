@@ -2,20 +2,32 @@ import Webcam from "react-webcam";
 import { useState, useRef, useCallback, useEffect } from "react";
 
 import { findMarkers, flattenFrame } from "../../utils/CVUtils";
-import { checkMarkers, AsteroidSimulation } from "./SimUtils";
+import { AsteroidSimulation } from "./SimUtils";
 
 import { BottombarCapture } from "../../ui/Bottombar";
 
 import CheckImg from "../../images/check-mark.svg";
-import CaptureBtn from '../../images/capture-btn.svg';
+import CaptureBtn from "../../images/capture-btn.svg";
+import BackBtn from "../../images/back-btn.svg";
 
 const VideoConstraints = {
     width: 1080,
     height: 720,
-    facingMode: "environment"
+    facingMode: { exact: "user" }
+    // deviceId: "e3a49304cc65499adafe09657185cded53330602da2c058895bed2d1b70411fb"
 };
   
 export function CameraPage({setState, simData}) {
+    const handleDevices = useCallback(
+        mediaDevices => 
+            console.log(mediaDevices),
+        []
+    );
+
+    useEffect(() => {
+        navigator.mediaDevices.enumerateDevices().then(handleDevices);
+    }, [handleDevices]);
+
 
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
@@ -41,7 +53,11 @@ export function CameraPage({setState, simData}) {
             // cv.cvtColor(img, gray, cv.COLOR_RGBA2GRAY);
 
             let markers = new Map();
-            let markersFound = checkMarkers(img, markers);
+            let markersFound = false;
+            if (simData.getState() === "bg-camera") 
+                markersFound = simData.checkBgMarkers(img, markers);
+            else if (simData.getState() === "obj-camera")
+                markersFound = simData.checkObjMarkers(img, markers);
             setValidFrame(markersFound);
 
             // console.log(`Valid: ${validFrame}`);
@@ -58,88 +74,21 @@ export function CameraPage({setState, simData}) {
         return () => clearInterval(interval);
     }, [processFrame]);
 
-    const captureBg = useCallback(() => {
+    const captureFrame = useCallback(() => {
         console.log("Capturing frame");
 
         // Take the last valid captured image and flatten it
-        // Add background and objects based on the capture mode
-        simData.addBackground();
+        // Add background and objects based on the capture mode\
+        if (simData.getState() === "bg-camera")
+            simData.addBackground();
+        else if (simData.getState() === "obj-camera")
+            simData.addObjects();
+
         setState("home");
-
-
-
-        // if (webcamRef == null) {
-        //     console.log("Not declared yet");
-        //     return;
-        // }
-
-        // console.log("Capturing frame");
-
-        // if (!validFrame) 
-        //     return;
-
-
-        // const video = webcamRef.current.video;
-        // const canvas = canvasRef.current;
-
-        // if (video && canvas) {
-        //     const ctx = canvas.getContext("2d");
-        //     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        //     const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        //     const img = cv.matFromImageData(frame);
-
-        //     let markers = new Map();
-        //     let markersFound = checkMarkers(img, markers);
-
-        //     // Find markers and return flattened image
-        //     if (markersFound) {
-        //         const flat = new cv.Mat();
-        //         flattenFrame(img, flat, markers);
-
-        //         // Delete old capture
-        //         if (capture !== null)
-        //             capture.delete();
-
-        //         setCapture(gray);
-
-        //         img.delete();
-        //         // gray.delete();
-
-        //         setState("home");
-        //     }
-
-            // let markersFound = checkMarkers(img);
-            // setValidFrame(markersFound);
-
-            // cv.imshow(capture, gray);
-        // }
     }, []);
-
-    // If valid frame, set capture frame
-    if (validFrame) {
-        // console.log("valid?");
-        // Delete old capture
-        // if (capture !== null)
-        //     capture.delete();
-
-        // setCapture(img);
-        const video = webcamRef.current.video;
-        const canvas = canvasRef.current;
-
-        if (video && canvas) {
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const img = cv.matFromImageData(frame);
-
-            simData.updateCurrentCapture(img);
-        }
-    }
     
     return (
-        <div className="CameraPreview">
+        <div className="CameraPage">
             <Webcam 
                 className="Webcam"
                 audio={false}
@@ -154,14 +103,20 @@ export function CameraPage({setState, simData}) {
                 style={{display: "none"}}
             />
             <CameraCheck check={validFrame} />
-            <Bottombar onClick={() => {captureBg();}} valid={validFrame} />
+            <Bottombar onClick={() => {captureFrame()}} onBack={() => {setState("home")}} valid={validFrame} />
         </div>
     )
 }
 
-function Bottombar({onClick, valid}) {
+function Bottombar({onClick, onBack, valid}) {
     return (
         <div className="Bottombar">
+            <img 
+                className="BackBtn"
+                src={BackBtn}
+                alt="Back Button"
+                onClick={() => {onBack()}}
+            />
             {valid ? 
                 <img 
                     className="CaptureBtn"
@@ -178,8 +133,6 @@ function Bottombar({onClick, valid}) {
                     style={{opacity: "0.2"}}
                 />
             }
-            
-            
         </div>
     )
 }

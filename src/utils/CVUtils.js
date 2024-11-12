@@ -1,5 +1,8 @@
 const OBJECT_MARKER_SCALE = 4;
 
+const SCAN_OFFSET_X = 120;
+const SCAN_OFFSET_Y = 120;
+
 export function findMarkers(img, markers) {
     let detectionParams = new cv.aruco_DetectorParameters();
     let refineParams = new cv.aruco_RefineParameters(10.0, 3.0, true);
@@ -37,10 +40,17 @@ export function findMarkers(img, markers) {
     return markers;
 }
 
-export function flattenFrame(frame, res, markers, width, height, offX = 0, offY = 0) {
+export function flattenFrame(frame, res, markers, width, height, offset=false) {
     console.log(`Flattening image, size: ${frame.cols}, ${frame.rows}`)
     console.log("Markers:");
     console.log(markers);
+
+    let offX = 0;
+    let offY = 0;
+    if (offset) {
+      offX = SCAN_OFFSET_X;
+      offY = SCAN_OFFSET_Y;
+    }
 
     let topLeft, topRight, bottomRight, bottomLeft;
   
@@ -217,14 +227,36 @@ export function findObjects(frame, markers, M, objects) {
               Math.atan2(topRight.y - topLeft.y, topRight.x - topLeft.x) *
               (180 / Math.PI);
 
-            pos.x = pos.x - 50;
-            pos.y = pos.y - 50;
+            pos.x = pos.x; // - SCAN_OFFSET_X;
+            pos.y = pos.y; // - SCAN_OFFSET_Y;
 
-            console.log(`[DEBUG] Adding object ${i}`);
-            // objects.set(i, )
+            console.log(`[CV] Found object ${i}`);
+            objects.set(i, {
+                'img': roiObject,
+                'pos': pos,
+                'rot': rot,
+                'size': side
+            });
+            console.log(objects.get(i));
+
+            // dst.copyTo(res);
 
             mask.delete();
             dst.delete();
         }
+    }
+}
+
+export function renderObjectOnBg(bg, obj, pos) {
+    // console.log(`[INFO] Adding object at ${pos.x}, ${pos.y}`);
+
+    for (let i = 0; i < obj.rows; i++) {
+      for (let j = 0; j < obj.cols; j++) {
+        if (obj.ucharPtr(i, j)[3] === 255) {
+          bg.ucharPtr(i + pos.y, j + pos.x)[0] = obj.ucharPtr(i, j)[0];
+          bg.ucharPtr(i + pos.y, j + pos.x)[1] = obj.ucharPtr(i, j)[1];
+          bg.ucharPtr(i + pos.y, j + pos.x)[2] = obj.ucharPtr(i, j)[2];
+        }
+      }
     }
 }
