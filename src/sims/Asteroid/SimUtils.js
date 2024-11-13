@@ -116,34 +116,36 @@ export const AsteroidSimulation = class {
         // Find objects in the flattened image
         let objects = new Map();
         this.objectImg = this.background.clone();
+        // this.objectImg = capture.clone();
         findObjects(capture, markers, M, objects);
 
         // Add sun 
         if (objects.has(103)) {
             this.sun = objects.get(103).img;
-            this.sunPos = objects.get(103).pos;
+            this.sunPos = objects.get(103).center;
 
             renderObjectOnBg(this.objectImg, this.sun, this.sunPos);
-            console.log("[INFO] Added sun");
+            console.log(`[INFO] Added sun at ${this.sunPos.x}, ${this.sunPos.y}`);
         }
 
         // Add asteroid 
         if (objects.has(101)) {
             this.asteroid = objects.get(101).img;
-            this.asteroidPos = objects.get(101).pos;
+            this.asteroidPos = objects.get(101).center;
 
             renderObjectOnBg(this.objectImg, this.asteroid, this.asteroidPos);
-            console.log("[INFO] Added asteroid");
+            console.log(`[INFO] Added asteroid at ${this.asteroidPos.x}, ${this.asteroidPos.y}`);
         }
 
         // Add focus 
         if (objects.has(100)) {
-            this.focusPos = objects.get(100).pos;
+            this.focusPos = objects.get(100).center;
 
-            console.log("[INFO] Added focus");
+            console.log(`[INFO] Added focus at ${this.focusPos.x}, ${this.focusPos.y}`);
         }
 
         this.simulationReady = objects.has(100) && objects.has(101) && objects.has(103);
+        capture.delete();
     }
 
     previewObjects(canvas, width, height) {
@@ -163,15 +165,23 @@ export const AsteroidSimulation = class {
     }
 
     animateOrbit(canvas, frameCount, width, height) {
-        // Dummy animation currently -- need to fix
-        console.log(this.simulationReady);
+        // Dummy animation -- need to fix
         if (this.simulationReady) {
             let frame = this.background.clone();
 
-            // Render the sun on the background
+            // Place the sun at the center
             renderObjectOnBg(frame, this.sun, {x: Math.floor(this.width / 2), y: Math.floor(this.height / 2)});
 
+            // Calculate the asteroid's position in the orbit 
+            let angularSpeed = 0.08;
+            let theta = frameCount * angularSpeed;
+            let radius = Math.floor(this.height / 3);
+            this.asteroidPos.x = Math.floor(this.width / 2) + radius * Math.cos(theta);
+            this.asteroidPos.y = Math.floor(this.height / 2) + radius * Math.sin(theta);
+            
+            renderObjectOnBg(frame, this.asteroid, this.asteroidPos);
 
+            // Resize frame to fit on canvas 
             let temp = new cv.Mat();
             let dsize = new cv.Size(width, height);
 

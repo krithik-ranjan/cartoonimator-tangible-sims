@@ -168,6 +168,12 @@ export function findObjects(frame, markers, M, objects) {
             bottomLeft.x = (topLeft.x + bottomRight.x + topLeft.y - bottomRight.y) / 2;
             bottomLeft.y = (bottomRight.x - topLeft.x + topLeft.y + bottomRight.y) / 2;
 
+            console.log(`[debug] Object (${i}) corners:`);
+            console.log(`\ttl: ${topLeft.x}, ${topLeft.y}`);
+            console.log(`\ttr: ${topRight.x}, ${topRight.y}`);
+            console.log(`\tbr: ${bottomRight.x}, ${bottomRight.y}`);
+            console.log(`\tbl: ${bottomLeft.x}, ${bottomLeft.y}`);
+
             // Set up the mask in the frame to obtain object
             let mask = new cv.Mat(frame.rows, frame.cols, frame.type());
             cv.rectangle(
@@ -227,13 +233,14 @@ export function findObjects(frame, markers, M, objects) {
               Math.atan2(topRight.y - topLeft.y, topRight.x - topLeft.x) *
               (180 / Math.PI);
 
-            pos.x = pos.x; // - SCAN_OFFSET_X;
-            pos.y = pos.y; // - SCAN_OFFSET_Y;
+            // pos.x = pos.x - Math.floor(side / 2);
+            // pos.y = pos.y - Math.floor(side / 2);
 
             console.log(`[CV] Found object ${i}`);
             objects.set(i, {
                 'img': roiObject,
                 'pos': pos,
+                'center': center,
                 'rot': rot,
                 'size': side
             });
@@ -249,13 +256,17 @@ export function findObjects(frame, markers, M, objects) {
 
 export function renderObjectOnBg(bg, obj, pos) {
     // console.log(`[INFO] Adding object at ${pos.x}, ${pos.y}`);
+    
+    // The pos is of the center of the object, derive the top left corner for rendering
+    let x = pos.x - Math.floor(obj.cols / 2);
+    let y = pos.y - Math.floor(obj.rows / 2);
 
     for (let i = 0; i < obj.rows; i++) {
       for (let j = 0; j < obj.cols; j++) {
         if (obj.ucharPtr(i, j)[3] === 255) {
-          bg.ucharPtr(i + pos.y, j + pos.x)[0] = obj.ucharPtr(i, j)[0];
-          bg.ucharPtr(i + pos.y, j + pos.x)[1] = obj.ucharPtr(i, j)[1];
-          bg.ucharPtr(i + pos.y, j + pos.x)[2] = obj.ucharPtr(i, j)[2];
+          bg.ucharPtr(i + y, j + x)[0] = obj.ucharPtr(i, j)[0];
+          bg.ucharPtr(i + y, j + x)[1] = obj.ucharPtr(i, j)[1];
+          bg.ucharPtr(i + y, j + x)[2] = obj.ucharPtr(i, j)[2];
         }
       }
     }

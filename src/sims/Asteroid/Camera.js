@@ -13,8 +13,8 @@ import BackBtn from "../../images/back-btn.svg";
 const VideoConstraints = {
     width: 1080,
     height: 720,
-    facingMode: { exact: "user" }
-    // deviceId: "e3a49304cc65499adafe09657185cded53330602da2c058895bed2d1b70411fb"
+    // facingMode: { exact: "environment" }
+    deviceId: "128849aa6d8fc61174b05c1d415cd982031daa69703c92d872b4dd325014aa6f"
 };
   
 export function CameraPage({setState, simData}) {
