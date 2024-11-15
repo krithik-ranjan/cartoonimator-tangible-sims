@@ -12,6 +12,7 @@ UI
 - [ ] Add camera mirror control on homepage
 - [ ] Add replay and download functionality
 - [ ] Mobile styles and sizes 
+- [ ] Add toggle for ellipse on asteroid orbit
 
 Animation 
 - [ ] Physics-based asteroid orbit math 
