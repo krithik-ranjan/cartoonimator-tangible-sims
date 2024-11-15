@@ -12,10 +12,11 @@ UI
 - [ ] Add camera mirror control on homepage
 - [ ] Add replay and download functionality
 - [ ] Mobile styles and sizes 
-- [ ] Add toggle for ellipse on asteroid orbit
+- [ ] Add toggle for ellipse
 
 Animation 
-- [ ] Physics-based asteroid orbit math 
+- [ ] Fix starting position of asteroid
+- [ ] Recalculate ellipse if new objects picture is taken
 
 Functionality 
 - [ ] Fix capture button flicker

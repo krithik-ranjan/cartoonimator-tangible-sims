@@ -27,7 +27,7 @@ export const AsteroidSimulation = class {
         this.asteroidPos = { x: 0, y: 0};
         this.focusPos = { x: 0, y: 0};
 
-        this.ellipseInfo = {width: null, height: null, angle: 0};
+        this.ellipseInfo = {width: 0, height: 0, angle: 0, isSet: false};
         this.ellipsePos = {x: 0, y: 0};
         this.asteroidInfo = {v: 0, peri: {x: 0, y: 0}, theta: 0};
 
@@ -153,6 +153,8 @@ export const AsteroidSimulation = class {
 
         this.simulationReady = objects.has(100) && objects.has(101) && objects.has(103);
         capture.delete();
+
+        this.ellipseInfo.isSet = false;
     }
 
     previewObjects(canvas, width, height) {
@@ -202,7 +204,7 @@ export const AsteroidSimulation = class {
             let frame = this.background.clone();
 
             // only calculate the ellipse if it hasn't been calculated before
-            if(this.ellipseInfo.width == null && this.ellipseInfo.height == null) {
+            if(this.ellipseInfo.isSet == false) {
                 this.calculateEllipse();
             }
             this.calculateVelocity();
@@ -272,6 +274,8 @@ export const AsteroidSimulation = class {
 
         // calculate true anamoly (angle between the asteroid and the periapsis)
         this.asteroidInfo.theta = Math.atan2((this.asteroidPos.y - this.asteroidInfo.peri.y), (this.asteroidPos.x - this.asteroidInfo.peri.x));
+
+        this.ellipseInfo.isSet = true;
     }
 
     calculateVelocity(){
