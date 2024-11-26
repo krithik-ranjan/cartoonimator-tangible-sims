@@ -71,7 +71,7 @@ export function PlayPage({setState, simData}) {
     )
 }
 
-function Bottombar({onReplay, onDownload, onBack}) {
+function Bottombar({onDownload, onBack}) {
     return (
         <div className="Bottombar">
             <img 
@@ -79,12 +79,6 @@ function Bottombar({onReplay, onDownload, onBack}) {
                 src={BackBtn}
                 alt="Back Button"
                 onClick={() => {onBack()}}
-            />
-            <img 
-                className="ReplayBtn"
-                src={ReplayBtn}
-                alt="Replay Button"
-                onClick={() => {onReplay()}}
             />
             <img 
                 className="DownloadBtn"

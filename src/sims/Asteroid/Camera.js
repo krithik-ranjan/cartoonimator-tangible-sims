@@ -54,14 +54,16 @@ export function CameraPage({setState, simData}) {
             if (markersFound) {
                 setLastValidTime(Date.now() % 100000);
                 setValidFrame(true);
-            } else {
-                if (Date.now() > lastValidTime + 2000) {
-                    setValidFrame(false);
-                }
-                else {
-                    setValidFrame(true);
-                }
-            }
+            } 
+            // Stop camera flicker by resetting every 2s -- currently commented cuz doesn't work
+            // else {
+            //     if (Date.now() > lastValidTime + 2000) {
+            //         setValidFrame(false);
+            //     }
+            //     else {
+            //         setValidFrame(true);
+            //     }
+            // }
             // console.log(lastValidTime);
 
             img.delete();
@@ -117,7 +119,7 @@ function Bottombar({onClick, onBack, valid, setCamera}) {
     const [selectedCamera, setSelectedCamera] = useState("");
     
     useEffect(() => {
-        const getDevices = async () => {
+        const getDevices = setTimeout(async () => {
             try {
                 const devices = await navigator.mediaDevices.enumerateDevices();
                 const videoDevices = devices.filter(device => device.kind === "videoinput");
@@ -131,9 +133,9 @@ function Bottombar({onClick, onBack, valid, setCamera}) {
             } catch (err) {
                 console.error("Error accessing devices: ", err);
             }
-        };
+        }, 5000);
 
-        getDevices();
+        return () => clearTimeout(getDevices);
     }, []);
 
     const handleDeviceChange = (event) => {

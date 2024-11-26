@@ -5,6 +5,11 @@ To run:
 > ($env:HTTPS = "true") -and (npm start --host)
 ```
 
+To deploy:
+```
+> npm run deploy
+```
+
 ### To-Do's
 
 UI
@@ -23,3 +28,6 @@ Functionality
 
 Other 
 - [ ] Make the mirror mount for camera
+
+### References
+[Github Pages deployment](https://github.com/gitname/react-gh-pages) 
