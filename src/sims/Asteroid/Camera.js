@@ -62,7 +62,7 @@ export function CameraPage({setState, simData}) {
                     setValidFrame(true);
                 }
             }
-            console.log(lastValidTime);
+            // console.log(lastValidTime);
 
             img.delete();
             // gray.delete();
@@ -156,7 +156,7 @@ function Bottombar({onClick, onBack, valid, setCamera}) {
                 onClick={() => {onBack()}}
             />
             <div className="BottomOptions">
-                <label>Select camera: </label>
+                <label>Camera: </label>
                 <select value={selectedCamera} onChange={handleDeviceChange}>
                     {cameraList}
                 </select>

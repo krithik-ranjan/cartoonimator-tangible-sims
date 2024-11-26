@@ -1,4 +1,5 @@
 import "./styles/main.css";
+import "./styles/mobile.css";
 
 import AsteroidSim from "./sims/Asteroid/SimMain.js";
 

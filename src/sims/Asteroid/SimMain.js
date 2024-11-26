@@ -78,33 +78,36 @@ function CapturePreview({setState, simData}) {
 
     return (
         <div className="PreviewPane">
-            <h4>Background</h4>
-            <div className="CapturePreview">
-                <canvas 
-                    ref={bgCanvasRef}
-                    width={480}
-                    height={320} />
-                <img 
-                    className="CameraBtn"
-                    src={CameraBtn}
-                    alt="Camera Button"
-                    onClick={() => setState("bg-camera") }
-                />
+            <div className="PreviewItem">
+                <h4>Background</h4>
+                <div className="CapturePreview">
+                    <canvas 
+                        ref={bgCanvasRef}
+                        width={480}
+                        height={320} />
+                    <img 
+                        className="CameraBtn"
+                        src={CameraBtn}
+                        alt="Camera Button"
+                        onClick={() => setState("bg-camera") }
+                    />
+                </div>
             </div>
-            <h4>Objects</h4>
-            <div className="CapturePreview">
-                <canvas 
-                    ref={objCanvasRef}
-                    width={480}
-                    height={320} />
-                <img 
-                    className="CameraBtn"
-                    src={CameraBtn}
-                    alt="Camera Button"
-                    onClick={() => setState("obj-camera")}
-                />
+            <div className="PreviewItem">
+                <h4>Objects</h4>
+                <div className="CapturePreview">
+                    <canvas 
+                        ref={objCanvasRef}
+                        width={480}
+                        height={320} />
+                    <img 
+                        className="CameraBtn"
+                        src={CameraBtn}
+                        alt="Camera Button"
+                        onClick={() => setState("obj-camera")}
+                    />
+                </div>
             </div>
-            
         </div>
     )
 }

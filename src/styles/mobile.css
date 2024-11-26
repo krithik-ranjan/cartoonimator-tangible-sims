@@ -1,0 +1,167 @@
+   
+/* Specific style for mobile view */
+@media (max-width: 480px) {
+    .App {
+        /* width: 1%; */
+        font-family: "IBM PLex Sans", sans-serif;
+        font-size: 18px;
+        padding: 10px;
+        background-color: "#fafafa";
+        /* height: calc(100vh - 60px); */
+        padding-bottom: 60px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .home {
+        flex: 1;
+        overflow-y: auto;
+        display: block;
+    }
+
+    h1 {
+        font-family: "IBM Plex Sans Condensed", sans-serif;
+        font-size: 28px;
+        margin-bottom: 12px;
+        font-weight: 600;
+    }
+
+    .Titlebar {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .Bottombar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        text-align: center;
+        align-content: center;
+        z-index: 10;
+        box-shadow: 0px -1px 20px rgba(10, 10, 10, 0.2);
+        background-color: #fafafa;
+    }
+
+    .SimInfo {
+        padding-left: 10px;
+        padding-right: 10px;
+        display: block;
+        height: 100%;
+    }
+
+    .SimInstr {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+    }
+
+    .SimCards {
+        width: 100%;
+        padding: 0px;
+        padding-top: 10px;
+    }
+
+    .PreviewPane {
+        display: block;
+    }
+
+    .ObjectInfo {
+        padding: 0px;
+        padding-top: 5px;
+        display: flex;
+        gap: 5px;
+    }
+
+    .ObjectImage {
+        flex: 1;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .ObjectImage p {
+        margin: 2px;
+        font-weight: 500;
+    }
+
+    .ObjectImage img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .PreviewPane {
+        padding: 0px;
+        display: block;
+        justify-content: center;
+    }
+
+    .PreviewItem {
+        padding: 10px;
+    }
+
+    .PreviewItem h4 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .CapturePreview {
+        /* flex: 1; */
+        width: 360px;
+        height: 240px;
+        background-color: lightgray;
+        align-content: center;
+        border-radius: 10px;
+        position: relative;
+    }
+    
+    .CapturePreview canvas {
+        border-radius: 10px;
+        width: 360px;
+        height: 240px;
+    }
+
+    /* Bottom bar stuff */
+
+    .PlayBtn {
+        padding: 10px;
+        height: 40px;
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+    }
+
+    .CaptureBtn {
+        padding: 10px;
+        height: 40px;
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+    }
+
+    .ReplayBtn {
+        padding: 10px;
+        height: 40px;
+        position: absolute;
+        right: 150px;
+        bottom: 0px;
+    }
+
+    .DownloadBtn {
+        padding: 10px;
+        height: 40px;
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+    }
+
+    .BackBtn {
+        height: 40px;
+        position: absolute;
+        padding: 10px;
+        left: 0px;
+        bottom: 0px
+    }
+
+}

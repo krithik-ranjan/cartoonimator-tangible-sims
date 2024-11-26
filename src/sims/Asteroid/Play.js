@@ -81,13 +81,13 @@ function Bottombar({onReplay, onDownload, onBack}) {
                 onClick={() => {onBack()}}
             />
             <img 
-                className="BottomBtn"
+                className="ReplayBtn"
                 src={ReplayBtn}
                 alt="Replay Button"
                 onClick={() => {onReplay()}}
             />
             <img 
-                className="BottomBtn"
+                className="DownloadBtn"
                 src={DownloadBtn}
                 alt="Download Button"
                 onClick={() => {onDownload()}}

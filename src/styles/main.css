@@ -11,7 +11,7 @@
 }
 
 .Home {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
 }
 
@@ -32,9 +32,38 @@
 
 .SimInfo {
     /* flex: 1; */
-    padding-left: 80px;
-    padding-right: 80px;
+    padding-left: 15vw;
+    padding-right: 15vw;
+    /* padding-bottom: 40px; */
+    /* width: 100%; */
+    display: flex;
+    height: 30vh;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+.SimInstr {
     width: 480px;
+    padding-right: 20px;
+}
+
+.SimCards {
+    width: 480px;
+    padding-left: 20px;
+    padding-top: 30px;
+}
+
+.PreviewPane {
+    padding-left: 15vw;
+    padding-right: 15vw;
+    display: flex;
+    justify-content: center;
+}
+
+.PreviewItem {
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px
 }
 
 .CapturePreview p {
@@ -60,7 +89,7 @@
     width: 60px;
 }
 
-.SimInfo h1 {
+h1 {
     font-family: "IBM Plex Sans Condensed", sans-serif;
     font-size: 32px;
     margin-bottom: 12px;
@@ -123,13 +152,14 @@
     background-color: #fafafa;
 }
 
-/* .BottomOptions {
-    align-self: center;
-} */
+/* Bottom bar stuff */
 
 .PlayBtn {
     padding: 20px;
     height: 40px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
 }
 
 .CaptureBtn {
@@ -140,9 +170,20 @@
     bottom: 0px;
 }
 
-.BottomBtn {
+.ReplayBtn {
     padding: 20px;
     height: 40px;
+    position: absolute;
+    right: 150px;
+    bottom: 0px;
+}
+
+.DownloadBtn {
+    padding: 20px;
+    height: 40px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
 }
 
 .BackBtn {
@@ -187,105 +228,3 @@
     border-radius: 10px;
 }
 
-   
-/* Specific style for mobile view */
-@media (max-width: 480px) {
-    .App {
-        width: 100vw;
-        height: 100vh;
-        padding: 20px;
-    }
-
-    /* HomePage components */
-
-    .SimInfo {
-        margin-bottom: 20px;
-    }
-
-    .CapturePreview {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        background-color: lightgray;
-        align-content: center;
-        border-radius: 10px;
-        position: relative;
-    }
-
-    .CapturePreview p {
-        color: grey;
-        padding: 12px;
-    }
-
-    .CameraBtn {
-        position: absolute;
-        bottom: 15px;
-        right: 15px;
-        width: 40px;
-    }
-
-    .ObjectInfo {
-        text-align: center;
-        padding: 10px;
-        display: flex;
-        gap: 10px;
-    }
-
-    .ObjectImage {
-        flex: 1;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-
-    .ObjectImage p {
-        margin: 6px;
-        font-weight: 500;
-    }
-
-    .ObjectImage hr {
-        width: 20px;
-        height: 2px;
-        border: none;
-        background-color: lightgray;
-    }
-
-    .ImageDesc {
-        width: 100%;
-        border: 2px solid lightgray;
-        align-content: center;
-        border-radius: 10px;
-        position: relative;
-    }
-
-    .ImageDesc p {
-        padding: 12px;
-        margin: 0px;
-    }
-
-    .BottomBar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 80px;
-        text-align: right;
-        align-content: center;
-        z-index: 10;
-        box-shadow: 0px -1px 20px rgba(10, 10, 10, 0.2);
-    }
-
-    .PlayBtn {
-        padding: 20px;
-        height: 40px;
-    }
-
-    /* Camera Page Components */
-
-    .CameraPreview {
-        width: 100%;
-        aspect-ratio: 9 / 16;
-        background-color: lightgray;
-        align-content: center;
-        border-radius: 10px;
-        position: relative;
-    }
-}
