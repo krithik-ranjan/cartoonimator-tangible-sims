@@ -195,6 +195,15 @@ h1 {
     bottom: 0px
 }
 
+.OrbitBtn {
+    padding: 20px;
+    height: 40px;
+    /* uncomment below for placing next to download */
+    /* position: absolute;
+    right: 150px;
+    bottom: 0px; */
+}
+
 /* Camera Page Components */
 
 /* .Camera {

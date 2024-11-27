@@ -10,7 +10,7 @@ export function PlayPage({setState, simData}) {
     const canvasRef = useRef(null);
     const [playCanvas, setPlayCanvas] = useState(null);
 
-    // state for ellipse toggle
+    // state for orbit toggle
     const [checked, setChecked] = useState(true);
 
     // const animateFrame = useCallback(() => {
@@ -92,7 +92,7 @@ function Bottombar({onDownload, onBack, setState}) {
                 onClick={() => {onDownload()}}
             />
             <FormControlLabel 
-                className="OrbitToggle"
+                className="OrbitBtn"
                 control={<Checkbox defaultChecked />} 
                 label="ORBIT PATH"
                 onChange={(event) => {
