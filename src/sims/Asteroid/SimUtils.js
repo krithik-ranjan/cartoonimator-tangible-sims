@@ -173,7 +173,7 @@ export const AsteroidSimulation = class {
         }
     }
 
-    animateOrbit(canvas, frameCount, width, height) {
+    animateOrbit(canvas, frameCount, width, height, checked) {
         // Dummy animation -- need to fix
         if (this.simulationReady) {
             // let frame = this.background.clone();
@@ -235,12 +235,14 @@ export const AsteroidSimulation = class {
             cv.imshow(canvas, temp);
 
             // Draw the ellipse
-            ctx.beginPath();
-            ctx.strokeStyle = "yellow";
-            ctx.lineWidth = 6;
-            ctx.ellipse(this.ellipsePos.x, this.ellipsePos.y, this.ellipseInfo.width/2, this.ellipseInfo.height/2, this.ellipseInfo.angle, 0, 2 * Math.PI);
-            ctx.stroke();
-
+            if(checked){
+                ctx.beginPath();
+                ctx.strokeStyle = "yellow";
+                ctx.lineWidth = 6;
+                ctx.ellipse(this.ellipsePos.x, this.ellipsePos.y, this.ellipseInfo.width/2, this.ellipseInfo.height/2, this.ellipseInfo.angle, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
+            
             temp.delete();
             frame.delete();
         }
