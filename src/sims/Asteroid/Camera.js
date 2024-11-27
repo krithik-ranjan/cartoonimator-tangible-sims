@@ -22,7 +22,10 @@ export function CameraPage({setState, simData}) {
     const canvasRef = useRef(null);
 
     const [validFrame, setValidFrame] = useState(false);
-    const [lastValidTime, setLastValidTime] = useState(Date.now() % 100000);
+    // const [lastValidTime, setLastValidTime] = useState(Date.now() % 100000);
+
+    // set lastValidTime to -2000 to ensure frame is false on load
+    let lastValidTime = -2000;
 
     const [selectedCameraId, setSelectedCameraId] = useState("");
     
@@ -52,18 +55,21 @@ export function CameraPage({setState, simData}) {
                 markersFound = simData.checkObjMarkers(img, markers);
 
             if (markersFound) {
-                setLastValidTime(Date.now() % 100000);
+                lastValidTime = performance.now();
+                // setLastValidTime(Date.now() % 100000);
+                
                 setValidFrame(true);
             } 
             // Stop camera flicker by resetting every 2s -- currently commented cuz doesn't work
-            // else {
-            //     if (Date.now() > lastValidTime + 2000) {
-            //         setValidFrame(false);
-            //     }
-            //     else {
-            //         setValidFrame(true);
-            //     }
-            // }
+            else {
+                // if (Date.now() > lastValidTime + 2000) {
+                if (performance.now() - lastValidTime > 2000) {
+                    setValidFrame(false);
+                }
+                else {
+                    setValidFrame(true);
+                }
+            }
             // console.log(lastValidTime);
 
             img.delete();
