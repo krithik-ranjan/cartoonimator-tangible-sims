@@ -10,6 +10,11 @@ import CheckImg from "../../images/check-mark.svg";
 import CaptureBtn from "../../images/capture-btn.svg";
 import BackBtn from "../../images/back-btn.svg";
 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 // const VideoConstraints = {
 //     width: 1080,
 //     height: 720,
@@ -123,6 +128,8 @@ export function CameraPage({setState, simData}) {
 function Bottombar({onClick, onBack, valid, setCamera}) {
     const [devices, setDevices] = useState([]);
     const [selectedCamera, setSelectedCamera] = useState("");
+
+    const sxFont = {fontFamily: 'IBM PLex Sans', fontSize: '18px'};
     
     useEffect(() => {
         const getDevices = setTimeout(async () => {
@@ -150,10 +157,9 @@ function Bottombar({onClick, onBack, valid, setCamera}) {
         setSelectedCamera(event.target.value);
     }
 
-    // const cameraList = devices.length > 0 ? devices.map((dev) => <li>{dev.label}</li>) : <li>None</li>;
     const cameraList = devices.length > 0 ? devices.map((dev) => 
-        <option key={dev.deviceId} value={dev.deviceId}>{dev.label}</option>) : 
-        (<option disabled>Loading...</option>)
+        <MenuItem key={dev.deviceId} value={dev.deviceId} sx={sxFont}>{dev.label}</MenuItem>) : 
+        (<MenuItem disabled sx={sxFont}>Loading...</MenuItem>)
 
     return (
         <div className="Bottombar">
@@ -164,10 +170,18 @@ function Bottombar({onClick, onBack, valid, setCamera}) {
                 onClick={() => {onBack()}}
             />
             <div className="BottomOptions">
-                <label>Camera: </label>
-                <select value={selectedCamera} onChange={handleDeviceChange}>
-                    {cameraList}
-                </select>
+                <FormControl sx={{ minWidth: 150 }}>
+                    <InputLabel sx={sxFont}>Camera</InputLabel>
+                    <Select
+                        value={selectedCamera}
+                        onChange={handleDeviceChange}
+                        autoWidth
+                        label="Camera"
+                        sx={sxFont}
+                    >
+                        {cameraList}
+                    </Select>
+                </FormControl>
             </div>
             {valid ? 
                 <img 

@@ -91,17 +91,18 @@ function Bottombar({onDownload, onBack, setState}) {
                 alt="Download Button"
                 onClick={() => {onDownload()}}
             />
-            <FormControlLabel 
-                className="OrbitBtn"
-                control={<Checkbox defaultChecked />} 
-                label="ORBIT PATH"
-                onChange={(event) => {
-                    setState(event.target.checked);
-                }}
-                sx={{
-                    '& .MuiFormControlLabel-label': { fontFamily: 'IBM PLex Sans', fontSize: '18px', fontWeight: 500},
-                }}
-            />
+            <div className="OrbitBtn">
+                <FormControlLabel 
+                    control={<Checkbox defaultChecked />} 
+                    label="ORBIT PATH"
+                    onChange={(event) => {
+                        setState(event.target.checked);
+                    }}
+                    sx={{
+                        '& .MuiFormControlLabel-label': { fontFamily: 'IBM PLex Sans', fontSize: '18px', fontWeight: 500},
+                    }}
+                />
+            </div>
         </div>
     )
 }
