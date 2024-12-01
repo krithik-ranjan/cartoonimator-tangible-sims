@@ -264,9 +264,12 @@ export function renderObjectOnBg(bg, obj, pos) {
     for (let i = 0; i < obj.rows; i++) {
       for (let j = 0; j < obj.cols; j++) {
         if (obj.ucharPtr(i, j)[3] === 255) {
-          bg.ucharPtr(i + y, j + x)[0] = obj.ucharPtr(i, j)[0];
-          bg.ucharPtr(i + y, j + x)[1] = obj.ucharPtr(i, j)[1];
-          bg.ucharPtr(i + y, j + x)[2] = obj.ucharPtr(i, j)[2];
+          // Check if the pixel is within bounds before rednering
+          if ((i + y) < bg.rows && (j + x) < bg.cols) {
+            bg.ucharPtr(i + y, j + x)[0] = obj.ucharPtr(i, j)[0];
+            bg.ucharPtr(i + y, j + x)[1] = obj.ucharPtr(i, j)[1];
+            bg.ucharPtr(i + y, j + x)[2] = obj.ucharPtr(i, j)[2];
+          }
         }
       }
     }
