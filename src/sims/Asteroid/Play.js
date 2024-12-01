@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import Checkbox from "@mui/material/Checkbox";
+import Whammy from "react-whammy";
 
 import BackBtn from "../../images/back-btn.svg";
 import ReplayBtn from "../../images/replay-btn.svg";
 import DownloadBtn from "../../images/download-btn.svg";
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from "@mui/material/Checkbox";
 
 export function PlayPage({setState, simData}) {
     const canvasRef = useRef(null);
@@ -12,32 +13,56 @@ export function PlayPage({setState, simData}) {
 
     // state for orbit toggle
     const [checked, setChecked] = useState(true);
+    const [recording, setRecording] = useState(false);
 
-    // const animateFrame = useCallback(() => {
-    //     const canvas = canvasRef.current;
-
-    //     if (canvas) {
-    //         // Call animation functions
-    //         console.log("Animating");
-    //     }
-    // }, []);
-
-    // useEffect(() => {
-    //     const interval = setInterval(animateFrame, 30);
-    //     return () => clearInterval(interval);
-    // }, [animateFrame]);
-
-    const playAnimation = (frameCount) => {
-        // Dummy animation, uncomment to see
-        // let ctx = playCanvas.getContext("2d");
-
-        // ctx.clearRect(0, 0, playCanvas.width, playCanvas.height);
-        // ctx.fillStyle = "#000000";
-        // ctx.beginPath();
-        // ctx.arc(100, 100, 20 * Math.sin(frameCount * 0.05) ** 2, 0, 2 * Math.PI);
-        // ctx.fill();
-
+    const playAnimation = (frameCount) => { 
         simData.animateOrbit(playCanvas, frameCount, 1080, 720, checked);
+    }
+
+    const downloadAnimation = () => {
+        if (recording) return;
+        setRecording(true);
+
+        const duration = 5000; // 5 seconds
+        const fps = 24;
+        const frameInterval = 1000 / fps;
+        const totalFrames = Math.round((duration / 1000) * fps);
+
+        let currentFrame = 0;
+
+        const encoder = new Whammy.Video(fps); // 30 FPS
+
+        let startTime = performance.now();
+
+        const captureFrame = () => {
+            const elapsed = performance.now() - startTime;
+            // Capture current frame
+            encoder.add(playCanvas);
+            currentFrame++;
+            // console.log('Capturing frame');
+
+            if (currentFrame < totalFrames) {
+                setTimeout(captureFrame, frameInterval);
+            } else {
+                // console.log(`Stopped after ${currentFrame} frames`)
+
+                // Stop recording and generate video
+                const videoBlob = encoder.compile(false, (output) => {
+                    const url = URL.createObjectURL(output);
+
+                    // Trigger download
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'animation.webm';
+                    a.click();
+
+                    URL.revokeObjectURL(url);
+                    setRecording(false);
+                });
+            }
+        }; 
+
+        captureFrame();
     }
 
     useEffect(() => {
@@ -71,26 +96,36 @@ export function PlayPage({setState, simData}) {
                 width={1080}
                 height={720}
             />
-            <Bottombar onDownload={() => {}} onBack={() => {setState("home")}} setState={setChecked}/>
+            <Bottombar onDownload={downloadAnimation} downloadValid={!recording} onBack={() => {setState("home")}} setState={setChecked}/>
         </div>
     )
 }
 
-function Bottombar({onDownload, onBack, setState}) {
+function Bottombar({onDownload, downloadValid, onBack, setState}) {
     return (
         <div className="Bottombar">
             <img 
                 className="BackBtn"
                 src={BackBtn}
                 alt="Back Button"
-                onClick={() => {onBack()}}
+                onClick={onBack}
             />
-            <img 
-                className="DownloadBtn"
-                src={DownloadBtn}
-                alt="Download Button"
-                onClick={() => {onDownload()}}
-            />
+            { downloadValid ? 
+                <img 
+                    className="DownloadBtn"
+                    src={DownloadBtn}
+                    alt="Download Button"
+                    onClick={onDownload}
+                    style={{opacity: "1.0"}}
+                /> :
+                <img 
+                    className="DownloadBtn"
+                    src={DownloadBtn}
+                    alt="Download Button"
+                    onClick={() => {}}
+                    style={{opacity: "0.2"}}
+                />
+            }
             <FormControlLabel 
                 className="OrbitBtn"
                 control={<Checkbox defaultChecked />} 
