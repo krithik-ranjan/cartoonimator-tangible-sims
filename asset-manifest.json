@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/cartoonimator-tangible-sims/static/css/main.991207a2.css",
-    "main.js": "/cartoonimator-tangible-sims/static/js/main.b9adc24f.js",
+    "main.js": "/cartoonimator-tangible-sims/static/js/main.d3fa7263.js",
     "static/media/logo-full.svg": "/cartoonimator-tangible-sims/static/media/logo-full.b0b01985cc2a2f1d72ed210d1f12c62c.svg",
     "static/media/asteroid-sun.png": "/cartoonimator-tangible-sims/static/media/asteroid-sun.2a43f2d164cea403b438.png",
     "static/media/asteroid-asteroid.png": "/cartoonimator-tangible-sims/static/media/asteroid-asteroid.11fee9d7350691fb8c2a.png",
@@ -14,10 +14,10 @@
     "static/media/back-btn.svg": "/cartoonimator-tangible-sims/static/media/back-btn.eddb25c34e335f23319c11604ed6edda.svg",
     "static/media/check-mark.svg": "/cartoonimator-tangible-sims/static/media/check-mark.a12205a40543ed5f87724bf803b04e16.svg",
     "main.991207a2.css.map": "/cartoonimator-tangible-sims/static/css/main.991207a2.css.map",
-    "main.b9adc24f.js.map": "/cartoonimator-tangible-sims/static/js/main.b9adc24f.js.map"
+    "main.d3fa7263.js.map": "/cartoonimator-tangible-sims/static/js/main.d3fa7263.js.map"
   },
   "entrypoints": [
     "static/css/main.991207a2.css",
-    "static/js/main.b9adc24f.js"
+    "static/js/main.d3fa7263.js"
   ]
 }
