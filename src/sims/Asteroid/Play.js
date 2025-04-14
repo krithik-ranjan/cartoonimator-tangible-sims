@@ -23,8 +23,8 @@ export function PlayPage({setState, simData}) {
         if (recording) return;
         setRecording(true);
 
-        const duration = 5000; // 5 seconds
-        const fps = 24;
+        const duration = 10000; // 10 seconds
+        const fps = 15;
         const frameInterval = 1000 / fps;
         const totalFrames = Math.round((duration / 1000) * fps);
 
