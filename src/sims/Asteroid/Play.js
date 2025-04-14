@@ -90,12 +90,14 @@ export function PlayPage({setState, simData}) {
 
     return (
         <div className="PlayPage">
-            <canvas 
-                className="PlayCanvas"
-                ref={canvasRef}
-                width={1080}
-                height={720}
-            />
+            <div className="PlayDiv">
+                <canvas 
+                    className="PlayCanvas"
+                    ref={canvasRef}
+                    width={1080}
+                    height={720}
+                />
+            </div>
             <Bottombar onDownload={downloadAnimation} downloadValid={!recording} onBack={() => {setState("home")}} setState={setChecked}/>
         </div>
     )
@@ -126,7 +128,7 @@ function Bottombar({onDownload, downloadValid, onBack, setState}) {
                     style={{opacity: "0.2"}}
                 />
             }
-            <div className="OrbitBtn">
+            <div className="BottomOptions">
                 <FormControlLabel 
                     control={<Checkbox defaultChecked />} 
                     label="ORBIT PATH"

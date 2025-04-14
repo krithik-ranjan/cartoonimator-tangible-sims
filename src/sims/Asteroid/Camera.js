@@ -44,6 +44,8 @@ export function CameraPage({setState, simData}) {
         const canvas = canvasRef.current;
 
         if (video && canvas) {
+            let startTime = performance.now();
+
             const ctx = canvas.getContext("2d");
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
@@ -58,6 +60,9 @@ export function CameraPage({setState, simData}) {
                 markersFound = simData.checkBgMarkers(img, markers);
             else if (simData.getState() === "obj-camera")
                 markersFound = simData.checkObjMarkers(img, markers);
+
+            let endTime = performance.now();
+            console.log(`Detection time: ${endTime - startTime}`);
 
             if (markersFound) {
                 lastValidTime = performance.now();
@@ -146,7 +151,7 @@ function Bottombar({onClick, onBack, valid, setCamera}) {
             } catch (err) {
                 console.error("Error accessing devices: ", err);
             }
-        }, 5000);
+        }, 3000);
 
         return () => clearTimeout(getDevices);
     }, []);
