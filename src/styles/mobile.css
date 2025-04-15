@@ -1,6 +1,7 @@
    
 /* Specific style for mobile view */
-@media (max-width: 480px) {
+/* @media (max-width: 480px) { */
+@media (max-width: 960px) {
     .App {
         /* width: 1%; */
         font-family: "IBM PLex Sans", sans-serif;
@@ -8,7 +9,7 @@
         padding: 10px;
         background-color: "#fafafa";
         /* height: calc(100vh - 60px); */
-        padding-bottom: 60px;
+        padding-bottom: 80px;
         overflow-y: auto;
         display: flex;
         flex-direction: column;
@@ -37,8 +38,8 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 60px;
-        text-align: center;
+        height: 80px;
+        text-align: left;
         align-content: center;
         z-index: 10;
         box-shadow: 0px -1px 20px rgba(10, 10, 10, 0.2);
@@ -87,8 +88,8 @@
     }
 
     .ObjectImage img {
-        width: 80px;
-        height: 80px;
+        width: 20vw;
+        height: auto;
     }
 
     .PreviewPane {
@@ -109,7 +110,8 @@
     .CapturePreview {
         /* flex: 1; */
         width: 100%;
-        height: 240px;
+        aspect-ratio: 1.5 / 1;
+        height: auto;
         background-color: lightgray;
         align-content: center;
         border-radius: 10px;
@@ -128,12 +130,6 @@
     .Webcam {
         width: 100%;
         /* aspect-ratio: 0.667 / 1; */
-    }
-
-    .BottomOptions {
-        position: fixed;
-        bottom: 80px;
-        left: 20px;
     }
 
     /* Play page stuff */
@@ -160,16 +156,16 @@
         padding: 10px;
         height: 40px;
         position: absolute;
-        right: 0px;
-        bottom: 0px;
+        right: 5px;
+        bottom: 10px;
     }
 
     .CaptureBtn {
         padding: 10px;
         height: 40px;
         position: absolute;
-        right: 0px;
-        bottom: 0px;
+        right: 5px;
+        bottom: 10px;
     }
 
     .ReplayBtn {
@@ -177,15 +173,15 @@
         height: 40px;
         position: absolute;
         right: 150px;
-        bottom: 0px;
+        bottom: 10px;
     }
 
     .DownloadBtn {
         padding: 10px;
         height: 40px;
         position: absolute;
-        right: 0px;
-        bottom: 0px;
+        right: 5px;
+        bottom: 10px;
     }
 
     .BackBtn {
@@ -193,7 +189,15 @@
         position: absolute;
         padding: 10px;
         left: 0px;
-        bottom: 0px
+        bottom: 10px
+    }
+
+    .BottomOptions {
+        margin-left: 70px;
+        /* position: fixed; */
+        /* height: 40px;
+        bottom: 20px;
+        left: 70px; */
     }
 
 }

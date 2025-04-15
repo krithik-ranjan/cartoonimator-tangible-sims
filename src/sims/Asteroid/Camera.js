@@ -62,7 +62,7 @@ export function CameraPage({setState, simData}) {
                 markersFound = simData.checkObjMarkers(img, markers);
 
             let endTime = performance.now();
-            console.log(`Detection time: ${endTime - startTime}`);
+            // console.log(`Detection time: ${endTime - startTime}`);
 
             if (markersFound) {
                 lastValidTime = performance.now();
@@ -175,7 +175,7 @@ function Bottombar({onClick, onBack, valid, setCamera}) {
                 onClick={() => {onBack()}}
             />
             <div className="BottomOptions">
-                <FormControl sx={{ minWidth: 150 }}>
+                <FormControl sx={{ maxWidth: 120 }}>
                     <InputLabel sx={sxFont}>Camera</InputLabel>
                     <Select
                         value={selectedCamera}
